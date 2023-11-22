@@ -17,34 +17,26 @@ void printData() {
 
   Serial.print(F("timestamp: "));
   for (uint16_t i = 0; i < list.count(); ++i) {
-    list.get(i, data);
-    if (i)
-      Serial.print(',');
-    Serial.print(data.timestamp);
+    list.get(i, data); if (i) Serial.print(',');
+                       Serial.print(data.timestamp);
   }
   Serial.println();
   Serial.print(F("temperature: "));
   for (uint16_t i = 0; i < list.count(); ++i) {
-    list.get(i, data);
-    if (i)
-      Serial.print(',');
-    Serial.print(data.temp);
+    list.get(i, data);    if (i) Serial.print(',');
+                          Serial.print(data.temp);
   }
   Serial.println(F(" C"));
   Serial.print(F("humidity: "));
   for (uint16_t i = 0; i < list.count(); ++i) {
-    list.get(i, data);
-    if (i)
-      Serial.print(',');
-    Serial.print(data.hum);
+    list.get(i, data);    if (i)Serial.print(',');
+                           Serial.print(data.hum);
   }
   Serial.println(F(" %"));
   Serial.print(F("pressure: "));
   for (uint16_t i = 0; i < list.count(); ++i) {
-    list.get(i, data);
-    if (i)
-      Serial.print(',');
-    Serial.print(data.press);
+    list.get(i, data);  if (i)  Serial.print(',');
+                        Serial.print(data.press);
   }
   Serial.println(F(" Pa"));
 }
@@ -65,33 +57,20 @@ void setup() {
     data.press = 100000;
   } else {
     Serial.print(cnt);
-    if (cnt == list.MAXSIZE)
-      Serial.print('+');
+    if (cnt == list.MAXSIZE)      Serial.print('+');
     Serial.println(F(" time(s)"));
-    if (! list.get(cnt - 1, data)) {
-      Serial.println(F("Error getting last data item!"));
-      return;
-    }
+    if (! list.get(cnt - 1, data)) {Serial.println(F("Error getting last data item!"));   return; }
     ++data.timestamp;
-    if (data.temp < 25)
-      data.temp += random(200) / 100.0;
-    if (data.temp > 15)
-      data.temp -= random(200) / 100.0;
-    if (data.hum < 75)
-      data.hum += random(500) / 100.0;
-    if (data.hum > 25)
-      data.hum -= random(500) / 100.0;
-    if (data.press < 110000)
-      data.press += random(1000);
-    if (data.press > 90000)
-      data.press -= random(1000);
+    if (data.temp < 25      data.temp += random(200) / 100.0;
+    if (data.temp > 15      data.temp -= random(200) / 100.0;
+    if (data.hum < 75)      data.hum += random(500) / 100.0;
+    if (data.hum > 25)      data.hum -= random(500) / 100.0;
+    if (data.press < 110000)data.press += random(1000);
+    if (data.press > 90000) data.press -= random(1000);
   }
   data.sended = false;
   data.stored = false;
-  if (list.add(data, true) == list.ERR_INDEX) {
-    Serial.println(F("Error adding data item!"));
-    return;
-  }
+  if (list.add(data, true) == list.ERR_INDEX) {    Serial.println(F("Error adding data item!"));    return;  }
   printData();
 
   Serial.flush();
